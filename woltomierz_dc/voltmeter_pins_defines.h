@@ -37,8 +37,8 @@
 #define RANGE_READ_PIN(x)		READx(PIN, x)
 /*-------------------------------------------------------------*/
 
-/*------------------------ BLUETOOTH CONNECTED PIN -----------------*/
-#define BLUETOOTH_CONNECTED_PIN	D, 2
+/*------------------------ BLUETOOTH STATUS PIN -----------------*/
+#define BLUETOOTH_STATUS_PIN	D, 2
 
 #define BLUETOOTH_SET_DDR(x)	SETx(DDR, x)
 #define BLUETOOTH_CLEAR_DDR(x)	CLEARx(DDR, x)

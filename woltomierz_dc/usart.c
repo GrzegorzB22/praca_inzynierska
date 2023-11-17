@@ -27,7 +27,7 @@ void USART_Init(void)
 	UCSR0C &= ~_BV(USBS0);						// 1 bit stopu
 	UCSR0C &= ~(_BV(UCSZ01) | _BV(UCSZ00));		// interfejs 8-bit
 
-	BLUETOOTH_CLEAR_DDR(BLUETOOTH_CONNECTED_PIN);
+	BLUETOOTH_CLEAR_DDR(BLUETOOTH_STATUS_PIN);
 }
 
 Bluetooth_status Bluetooth_GetStatus(void)
