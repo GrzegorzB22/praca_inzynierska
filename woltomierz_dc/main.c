@@ -34,7 +34,7 @@ int main(void)
 	int16_t voltage_dec = 0;
 	int16_t voltage_fra = 0;
 
-	uint8_t range = 0xFF;
+	uint8_t range;
 	uint8_t last_range = 0xFF;
 
 	NOKIA_Init();

@@ -5,7 +5,7 @@
 #include <stdbool.h>
 #include "voltage_defines.h"
 
-static void ads_write16ToRegister(ADS_address_settings I2C_Address, ADS_registers reg, uint16_t value)
+static void ads_write16ToRegister(uint8_t I2C_Address, uint8_t reg, uint16_t value)
 {
 	I2C_StartAndTransmitAddress((I2C_Address << 1) + I2C_WRITE);
 	I2C_TransmitByte(reg);
@@ -14,7 +14,7 @@ static void ads_write16ToRegister(ADS_address_settings I2C_Address, ADS_register
 	I2C_Stop();
 }
 
-static uint16_t ads_read16FromRegister(ADS_address_settings I2C_Address, ADS_registers reg)
+static uint16_t ads_read16FromRegister(uint8_t I2C_Address, uint8_t reg)
 {
 	uint16_t register_value;
 
@@ -45,7 +45,7 @@ static uint16_t struct_sum(ADS_chip *chip)
 	return sum;
 }
 
-void ADS_Init(ADS_chip *chip, ADS_address_settings ads_address, ADS_dr_settings ads_dr)
+void ADS_Init(ADS_chip *chip, uint8_t ads_address, uint16_t ads_dr)
 {
 	I2C_Init();	
 	Voltmeter_RangePinsInit();
@@ -90,7 +90,7 @@ void ADS_Start_ContinuousConversion(ADS_chip *chip)
 	ads_write16ToRegister(chip->address, ADS_CONFIG_REGISTER, struct_sum(chip));
 }
 
-void ADS_Start_It(ADS_chip *chip, AT8_interrupt_pins pin)
+void ADS_Start_It(ADS_chip *chip, uint8_t pin)
 {
 	chip->comp_pol = ADS_COMP_ACTIVE_HIGH;
 	chip->comp_lat = ADS_NONLATCHING_COMP;
@@ -112,24 +112,24 @@ void ADS_Start_It(ADS_chip *chip, AT8_interrupt_pins pin)
 	ads_write16ToRegister(chip->address, ADS_CONFIG_REGISTER, struct_sum(chip));
 }
 
-void ADS_SET_Address(ADS_chip *chip, ADS_address_settings ads_address)
+void ADS_SET_Address(ADS_chip *chip, uint8_t ads_address)
 {
 	chip->address = ads_address;
 }
 
-void ADS_SET_Mux(ADS_chip *chip, ADS_mux_settings ads_mux)
+void ADS_SET_Mux(ADS_chip *chip, uint16_t ads_mux)
 {
 	chip->mux = ads_mux;
 	ads_write16ToRegister(chip->address, ADS_CONFIG_REGISTER, struct_sum(chip));
 }
 
-void ADS_SET_Fsr(ADS_chip *chip, ADS_pga_settings ads_fsr)
+void ADS_SET_Fsr(ADS_chip *chip, uint16_t ads_fsr)
 {
 	chip->fsr = ads_fsr;
 	ads_write16ToRegister(chip->address, ADS_CONFIG_REGISTER, struct_sum(chip));
 }
 
-void ADS_SET_Dr(ADS_chip *chip, ADS_dr_settings ads_dr)
+void ADS_SET_Dr(ADS_chip *chip, uint16_t ads_dr)
 {
 	chip->dr = ads_dr;
 	ads_write16ToRegister(chip->address, ADS_CONFIG_REGISTER, struct_sum(chip));
