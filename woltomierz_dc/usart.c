@@ -3,6 +3,7 @@
 #include <avr/io.h>
 #include "voltage_defines.h"
 #include "voltmeter_pins_defines.h"
+#include <stdbool.h>
 
 #define ABS(x)	((x < 0) ? -(x) : (x))
 
@@ -30,12 +31,9 @@ void USART_Init(void)
 	BLUETOOTH_CLEAR_DDR(BLUETOOTH_STATUS_PIN);
 }
 
-Bluetooth_status Bluetooth_GetStatus(void)
+bool Bluetooth_GetStatus(void)
 {
-	if (BLUETOOTH_READ_PIN(BLUETOOTH_CONNECTED_PIN))
-		return BLUETOOTH_CONNECTED;
-	else
-		return BLUETOOTH_DISCONNECTED;
+	return (BLUETOOTH_READ_PIN(BLUETOOTH_CONNECTED_PIN));
 }
 
 void USART_TransmitByte(uint8_t byte)
@@ -50,16 +48,16 @@ void USART_TransmitString(char *s)
 		USART_TransmitByte(*s++);
 }
 
-void USART_DisplayRange(Voltmeter_ranges range)
+void USART_DisplayRange(uint8_t range)
 {
-	if (range == RANGE_200_MV)		USART_TransmitString("Zakres 200 mV");
+	if (range == RANGE_200_MV)	USART_TransmitString("Zakres 200 mV");
 	else if (range == RANGE_2_V)	USART_TransmitString("Zakres 2 V");
 	else if (range == RANGE_20_V)	USART_TransmitString("Zakres 20 V");
 	
 	USART_TransmitByte(END_OF_TRANSMISSION_RANGE);
 }
 
-void USART_DisplayVoltage(int16_t dec, int16_t fra, Voltmeter_ranges range, Voltmeter_resolution resolution)
+void USART_DisplayVoltage(int16_t dec, int16_t fra, uint8_t range, uint8_t resolution)
 {
 	if (((range == RANGE_200_MV) && (ABS(dec) >= 200)) || ((range == RANGE_2_V) && (ABS(dec) >= 2)) || ((range == RANGE_20_V) && (ABS(dec) >= 20))) {
 		USART_TransmitByte('1');

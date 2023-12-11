@@ -16,15 +16,14 @@ void Voltmeter_RangePinsInit(void)
 	RANGE_SET_PORT(RANGE_20_V_PIN);
 }
 
-Voltmeter_ranges Voltmeter_GetRange(void)
+uint8_t Voltmeter_GetRange(void)
 {
-	if (RANGE_READ_PIN(RANGE_200_MV_PIN) == 0)		return RANGE_200_MV;
+	if (RANGE_READ_PIN(RANGE_200_MV_PIN) == 0)	return RANGE_200_MV;
 	else if (RANGE_READ_PIN(RANGE_2_V_PIN) == 0)	return RANGE_2_V;
 	else if (RANGE_READ_PIN(RANGE_20_V_PIN) == 0)	return RANGE_20_V;
-	else return 0xFF;
 }
 
-void convertAdcToVoltage(int16_t adc_value, Voltmeter_ranges range, Voltmeter_resolution resolution, int16_t *decimal_part, int16_t *fractional_part)
+void convertAdcToVoltage(int16_t adc_value, uint8_t range, uint8_t resolution, int16_t *decimal_part, int16_t *fractional_part)
 {
 	if (range == RANGE_200_MV) {
 		int64_t voltage = (int64_t)adc_value * LSB_RANGE_200_MV;

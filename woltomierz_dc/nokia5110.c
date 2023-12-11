@@ -10,6 +10,10 @@
 
 #define ABS(x) (((x) < 0) ? -(x) : (x))
 
+static n5110 nokia_screen = {
+	{0}, 0, 0
+};
+
 static void Nokia_Transmit(uint8_t byte)
 {
 	uint8_t mask = 0x80;
@@ -32,10 +36,6 @@ static void Nokia_Transmit(uint8_t byte)
 	
 	NOKIA_STOP_TRANSMIT;
 }
-
-static n5110 nokia_screen = {
-	{0}, 0, 0
-};
 
 static void Nokia_TransmitCommand(uint8_t command)
 {
@@ -159,7 +159,7 @@ void NOKIA_DisplayImage(uint8_t x0, uint8_t y0, uint8_t *image, uint8_t width, u
 	}
 }
 
-void NOKIA_DisplayVoltage(int16_t dec, int16_t fra, Voltmeter_ranges range, Voltmeter_resolution resolution)
+void NOKIA_DisplayVoltage(int16_t dec, int16_t fra, uint8_t range, uint8_t resolution)
 {
 	if (((range == RANGE_200_MV) && (ABS(dec) >= 200)) || ((range == RANGE_2_V) && (ABS(dec) >= 2)) || ((range == RANGE_20_V) && (ABS(dec) >= 20))) {
 		NOKIA_SetCursorXY(NOKIA_WIDTH/2 - 3, NOKIA_HEIGHT/2 - 4);
@@ -190,7 +190,7 @@ void NOKIA_DisplayVoltage(int16_t dec, int16_t fra, Voltmeter_ranges range, Volt
 	NOKIA_WriteString(voltage_string);
 }
 
-void NOKIA_DisplayRange(Voltmeter_ranges range)
+void NOKIA_DisplayRange(uint8_t range)
 {
 	NOKIA_SetCursorXY(NOKIA_WIDTH/2 - 30, NOKIA_HEIGHT - 7);
 	if (range == RANGE_200_MV)		NOKIA_WriteString("Zakres 200 mV");

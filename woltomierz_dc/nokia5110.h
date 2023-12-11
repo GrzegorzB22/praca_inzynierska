@@ -36,8 +36,8 @@ void NOKIA_PutPixel(uint8_t x, uint8_t y, uint8_t pixel_value);
 void NOKIA_WriteChar(char c);
 void NOKIA_WriteString(char *s);
 void NOKIA_DisplayImage(uint8_t x0, uint8_t y0, uint8_t *image, uint8_t width, uint8_t height);
-void NOKIA_DisplayVoltage(int16_t dec, int16_t fra, Voltmeter_ranges range, Voltmeter_resolution resolution);
-void NOKIA_DisplayRange(Voltmeter_ranges range);
+void NOKIA_DisplayVoltage(int16_t dec, int16_t fra, uint8_t range, uint8_t resolution);
+void NOKIA_DisplayRange(uint8_t range);
 
 
 #endif
